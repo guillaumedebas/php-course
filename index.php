@@ -10,6 +10,7 @@
         <p>
             Cette ligne a été écrite entièrement en HTML.<br>
             <?php 
+            //phpinfo();
             //variable
             $userAge = 40;
             $fullname = "Guillaume Debas";
@@ -24,7 +25,7 @@
             plusieurs lignes ! */
             echo "Celle-ci a été écrite entièrement en PHP.";
            
-            //phpinfo();
+            
              ?>
         </p>
         <p>
@@ -84,6 +85,7 @@ switch ($grade) // on indique sur quelle variable on travaille
         echo "Désolé, je n'ai pas de message à afficher pour cette note";
 }
 ?>
+<br>
 <?php
 //les ternaires
 $userAge = 24;
@@ -92,6 +94,28 @@ $isAdult = ($userAge >= 18) ? true : false;
 
 // Ou mieux, dans ce cas précis
 $isAdult = ($userAge >= 18);
+
+//Tableaux
+$guillaume = ['Guillaume Debas ', 'contact@guillaume-debas.com', 40];
+$anna = ['Anna Joud-Debas ', 'anna@guillaume-debas.com', 36];
+$alice = ['Alice Debas ', 'alice@guillaume-debas.com', 7];
+$hermione = ['Hermione Debas ', 'hermione@guillaume-debas.com', 5];
+
+$users = [$guillaume,$anna,$alice, $hermione];
+
+echo $users[1][0];
+
+//boucles
+//while
+
+$lines = 4; // nombre d'utilisateurs dans le tableau
+$counter = 0;
+echo "<br>";
+while ($counter < $lines) {
+    echo $users[$counter][0] . ' ' . $users[$counter][1] . '<br />';
+    $counter++; // Ne surtout pas oublier la condition de sortie !
+}
+
 ?>
 
             
