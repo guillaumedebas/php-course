@@ -114,7 +114,7 @@
         $counter = 0;
         echo "<br>";
         while ($counter < $lines) {
-            echo $users[$counter][0] . ' ' . $users[$counter][1] . '<br />';
+            echo $users[$counter][0] . ' ' . $users[$counter][1] . '<br>';
             $counter++; // Ne surtout pas oublier la condition de sortie !
         }
 
@@ -122,9 +122,102 @@
         //for
         echo "<br>";
         for ($lines = 0; $lines <= 3; $lines++) {
-            echo $users[$lines][0] . ' ' . $users[$lines][1] . '<br />';
+            echo $users[$lines][0] . ' ' . $users[$lines][1] . '<br>';
+        }
+        //Tableaux / Arrays
+        //tableau numéroté
+        $familly = ['Guillaume', 'Anna', 'Alice', 'Hermione'];
+        echo '<br>';
+        echo $familly[3];
+        $familly[4] = 'Jango';
+
+        //tableau associatif
+        $member = [
+            'firstname' => 'Guillaume',
+            'lastname' => 'Debas',
+            'age' => '40'
+        ];
+        $member['job'] = 'Develloper';
+        echo '<br>';
+        echo $member['firstname'];
+
+        //Parcourez un tableau
+        // Déclaration du tableau des recettes
+        $recipes = [
+            ['Cassoulet', '[...]', 'mickael.andrieu@exemple.com', true,],
+            ['Couscous', '[...]', 'mickael.andrieu@exemple.com', false,],
+        ];
+
+        foreach ($recipes as $recipe) {
+            echo '<br>';
+            echo $recipe[0]; // Affichera Cassoulet, puis Couscous
+
+        }
+        $recipe = [
+            'title' => 'Salade Romaine',
+            'recipe' => 'Etape 1 : Lavez la salade ; Etape 2 : euh ...',
+            'author' => 'laurene.castor@exemple.com',
+        ];
+
+        echo '<br>';
+        echo '<br>';
+        foreach ($recipe as $property => $propertyValue) {
+            echo '[' . $property . '] vaut ' . $propertyValue . PHP_EOL;
+            echo '<br>';
         }
 
+
+        echo '<pre>';
+        print_r($recipes);
+        echo '</pre>';
+
+        // Vérifiez si une clé existe dans un tableau avec array_key_exists
+        if (array_key_exists('title', $recipe)) {
+            echo 'La clé se trouve dans le tableaux !';
+            echo '<br>';
+        } else {
+            echo 'la clé ne se trouve pas dans le tableau';
+            echo '<br>';
+        }
+
+        if (array_key_exists('commentaires', $recipe)) {
+            echo 'La clé se trouve dans le tableaux !';
+            echo '<br>';
+        } else {
+            echo 'la clé ne se trouve pas dans le tableau !';
+            echo '<br>';
+        }
+
+        // Vérifiez si une valeur existe dans un tableau avec in_array
+        $usersTest = [
+            'Guillaume Debas',
+            'Anna Joud-Debas',
+            'Jango',
+        ];
+
+        if (in_array('Mathieu Nebra', $usersTest)) {
+            echo 'l\'utilisateur fait bien partie des utilisateurs enregistrés !';
+            echo '<br>';
+        } else {
+            echo 'l\'utilisateur ne fait pas partie des utilisateurs enregistrés !';
+            echo '<br>';
+        }
+
+        if (in_array('Arlette Chabot', $usersTest)) {
+            echo 'l\'utilisateur fait bien partie des utilisateurs enregistrés !';
+        } else {
+            echo 'l\'utilisateur ne fait pas partie des utilisateurs enregistrés !';
+            echo '<br>';
+        }
+
+        //Récupérez la clé d'une valeur dans un tableau avec array_search
+
+        $positionGuillaume = array_search('Guillaume Debas', $usersTest);
+        echo '"Guillaume" se trouve en position ' . $positionGuillaume . PHP_EOL;
+        echo '<br>';
+        $positionAnna = array_search('Anna Joud-Debas', $usersTest);
+        echo '"Anna" se trouve en position ' . $positionAnna . PHP_EOL;
+        echo '<br>';
         ?>
 
 
