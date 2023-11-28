@@ -258,6 +258,18 @@
         $year = date('Y');
         echo $year;
         echo '<br>';
+
+        // Enregistrement les informations de date dans des variables
+
+        $day = date('d');
+        $month = date('m');
+        $year = date('Y');
+
+        $hour = date('H');
+        $minut = date('i');
+
+        // Affichage
+        echo 'Bonjour ! Nous sommes le ' . $day . '/' . $month . '/' . $year . 'et il est ' . $hour . ' h ' . $minut;
         ?>
 
 
