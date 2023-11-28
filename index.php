@@ -253,8 +253,11 @@
             $recipeSI['recipe']
         );
 
-        //exemples
-
+        //date
+        echo '<br>';
+        $year = date('Y');
+        echo $year;
+        echo '<br>';
         ?>
 
 
