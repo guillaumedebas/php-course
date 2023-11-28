@@ -222,6 +222,8 @@
         //Les fonctions
         // 
         // str_replace pour rechercher et remplacer des mots dans une variable ;
+        echo str_replace('c', 'C', 'le cassoulet, c\'est très bon');
+        echo '<br>';
         // move_uploaded_file pour envoyer un fichier sur un serveur ;
         // imagecreate pour créer des images miniatures (aussi appelées "thumbnails") ;
         // mail pour envoyer un mail avec PHP (très pratique pour faire une newsletter) ;
@@ -232,15 +234,27 @@
         // Manipulez du texte avec les fonctions
         //
         // strlen pour calculer la longueur d'une chaîne de caractères ;
-        // str_replace pour rechercher et remplacer une chaîne de caractères ;
-        // sprintf pour formater une chaîne de caractères.
-
-        //exemples
         $recipe = 'Etape 1 : des flageolets ! Etape 2 : de la saucisse toulousaine';
         $length = strlen($recipe);
-
-
         echo 'La phrase ci-dessous comporte ' . $length . ' caractères :' . PHP_EOL . $recipe;
+        echo '<br>';
+        // str_replace pour rechercher et remplacer une chaîne de caractères ;
+        // sprintf pour formater une chaîne de caractères.
+        $recipeSI = [
+            'title' => 'Salade Romaine',
+            'recipe' => 'Etape 1 : Lavez la salade ; Etape 2 : euh ...',
+            'author' => 'laurene.castor@exemple.com',
+        ];
+
+        echo sprintf(
+            '%s par "%s" : %s',
+            $recipeSI['title'],
+            $recipeSI['author'],
+            $recipeSI['recipe']
+        );
+
+        //exemples
+
         ?>
 
 
