@@ -244,6 +244,7 @@
             'title' => 'Salade Romaine',
             'recipe' => 'Etape 1 : Lavez la salade ; Etape 2 : euh ...',
             'author' => 'laurene.castor@exemple.com',
+            'is_enabled' => true
         ];
 
         echo sprintf(
@@ -270,6 +271,41 @@
 
         // Affichage
         echo 'Bonjour ! Nous sommes le ' . $day . '/' . $month . '/' . $year . 'et il est ' . $hour . ' h ' . $minut;
+
+        echo '<br>';
+
+        function isValidRecipe(array $recipe): bool
+        {
+            if (array_key_exists('is_enabled', $recipe)) {
+                $isEnable = $recipe['is_enabled'];
+            } else {
+                $isEnable = false;
+            }
+            return $isEnable;
+        }
+
+        // 2 exemples
+        $romanSalad = [
+            'title' => 'Salade Romaine',
+            'recipe' => 'Etape 1 : Lavez la salade ; Etape 2 : euh ...',
+            'author' => 'laurene.castor@exemple.com',
+            'is_enabled' => true,
+        ];
+
+        $sushis = [
+            'title' => 'Sushis',
+            'recipe' => 'Etape 1 : du saumon ; Etape 2 : du riz',
+            'author' => 'laurene.castor@exemple.com',
+            'is_enabled' => false,
+        ];
+
+
+        $isRomanSaladValid = isValidRecipe($romanSalad);
+
+        if($isRomanSaladValid) {
+            echo 'Valide !';
+        }
+
         ?>
 
 
