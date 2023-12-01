@@ -302,13 +302,13 @@
 
         $isRomanSaladValid = isValidRecipe($romanSalad);
 
-        if($isRomanSaladValid) {
+        if ($isRomanSaladValid) {
             echo 'Valide !';
         }
-
+        echo '<br>';
         ?>
 
-
+        <a href="bonjour.php?nom=Debas&amp;prenom=Guillaume">Dis-moi bonjour !</a>
     </p>
 </body>
 
