@@ -25,7 +25,7 @@ $message = $_POST['message'];
     <body>
         <div class="container">
     
-        <?php include_once('header.php'); ?>
+        <?php include_once('includes/header.php'); ?>
             <h1>Message bien reçu !</h1>
             
             <div class="card">
