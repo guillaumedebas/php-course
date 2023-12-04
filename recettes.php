@@ -1,4 +1,12 @@
 <!-- index.php -->
+<?php
+
+if (!($_POST['login'] == 'contact@guillaume-debas.com' && $_POST['password'] == 'azerty123')) {
+    echo "erreur de connexion";
+    echo "retour au login : <a href='login.php'>Login</a>";
+    return;
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
