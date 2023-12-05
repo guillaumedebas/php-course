@@ -6,14 +6,12 @@
         ?>
 <?php
 
-if ((!isset($_POST['login']) || !isset($_POST['password']))) {
-    echo "absence de donnée<br>";
-    echo "retour au login : <a href='login.php'>Login</a>";
-    return;
-} elseif (!($_POST['login'] == 'contact@guillaume-debas.com' && $_POST['password'] == 'azerty123')) {
-    echo "erreur de connexion<br>";
-    echo "retour au login : <a href='login.php'>Login</a>";
-    return;
+if ((isset($_POST['login']) || isset($_POST['password']))) {
+    foreach($users as $user) {
+        if ($user['email'] == $_POST['login'] && $user['password'] == $_POST['password']) {
+         echo 'Bienvenue '.$user['full_name'];
+        }
+    }
 }
 ?>
 <!DOCTYPE html>
