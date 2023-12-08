@@ -1,9 +1,9 @@
 <!-- index.php -->
+<?php session_start(); ?>
 <!-- inclusion des variables et fonctions -->
 <?php
 include_once('includes/variables.php');
 include_once('includes/functions.php');
-$loggedUser = false;
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +22,10 @@ $loggedUser = false;
 
       <?php include_once('includes/login.php'); ?>
 
-    <?php if($loggedUser) : ?>
+    <?php if($_SESSION['LOGGED_USER']) : 
+     echo 'Bienvenue ' . $_SESSION['LOGGED_USER'].' ' ;
+    ?>
+   <a href='<?php session_destroy();?>'>Déconnexion</a>
         <h1>Site de recettes</h1>
 
       
@@ -39,7 +42,7 @@ $loggedUser = false;
     </div>
 
  
-    <?php include_once('includes/footer.php'); ?>
+    <?php include_once('includes/footer.php');    ?>
 </body>
 
 </html>

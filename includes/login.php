@@ -1,18 +1,18 @@
   <?php
-    if (isset($_POST['login']) && isset($_POST['password']))
+   if (isset($_POST['login']) && isset($_POST['password']))
         foreach ($users as $user) {
             if ($user['email'] == $_POST['login'] && $user['password'] == $_POST['password']) {
-                echo 'Bienvenue ' . $user['full_name'];
-                $loggedUser = [
-                    'email' => $user['email']
-                ];
+                $_SESSION['LOGGED_USER'] = $user['email'] ;
                 break;
             }
         }
 
     if (!isset($_POST['login']) || !isset($_POST['password'])) {
-        include_once('connexion_form.php');
-    }elseif (!$loggedUser) {
+        if (!$_SESSION['LOGGED_USER']) {
+            include_once('connexion_form.php');
+        }
+        
+        }elseif (!$_SESSION['LOGGED_USER']) {
         echo "Erreur de Login ou de Password";
         include_once('connexion_form.php');
     }
