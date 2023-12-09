@@ -22,7 +22,7 @@ include_once('includes/functions.php');
 
       <?php include_once('includes/login.php'); ?>
 
-    <?php if($_SESSION['LOGGED_USER']) : 
+    <?php if(isset($_SESSION['LOGGED_USER'])) : 
      echo 'Bienvenue ' . $_SESSION['LOGGED_USER'].' ' ;
     ?>
    <a href='<?php session_destroy();?>'>Déconnexion</a>

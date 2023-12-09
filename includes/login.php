@@ -8,7 +8,7 @@
         }
 
     if (!isset($_POST['login']) || !isset($_POST['password'])) {
-        if (!$_SESSION['LOGGED_USER']) {
+        if (!isset($_SESSION['LOGGED_USER'])) {
             include_once('connexion_form.php');
         }
         
