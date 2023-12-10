@@ -20,28 +20,33 @@ include_once('includes/functions.php');
 <body class="d-flex flex-column min-vh-100">
     <div class="container">
 
-      <?php include_once('includes/login.php'); ?>
+        <?php include_once('includes/login.php'); ?>
+        <?php if (isset($_SESSION['LOGGED_USER']) || isset($_COOKIE['LOGGED_USER'])) :
+            if ($_SESSION['LOGGED_USER']) :
+                echo 'Bienvenue ' . $_SESSION['LOGGED_USER'] . ' ';
+            // elseif ($_COOKIE['LOGGED_USER']) :
+            //     echo 'Bienvenue ' . $_COOKIE['LOGGED_USER'] . ' ';
+        ?>
+                <a href="includes/logout.php">Déconnexion</a>
+                <h1>Site de recettes</h1>
 
-    <?php if(isset($_SESSION['LOGGED_USER'])) : 
-     echo 'Bienvenue ' . $_SESSION['LOGGED_USER'].' ' ;
-    ?>
-   <a href='<?php session_destroy();?>'>Déconnexion</a>
-        <h1>Site de recettes</h1>
 
-      
-        <?php include_once('includes/header.php'); ?>
+                <?php include_once('includes/header.php'); ?>
 
-        <?php foreach (getRecipes($recipes) as $recipe) : ?>
-            <article>
-                <h3><?php echo $recipe['title']; ?></h3>
-                <div><?php echo $recipe['recipe']; ?></div>
-                <i><?php echo displayAuthor($recipe['author'], $users); ?></i>
-            </article>
-        <?php endforeach ?>
-        <?php endif; ?>
+                <?php foreach (getRecipes($recipes) as $recipe) : ?>
+                    <article>
+                        <h3><?php echo $recipe['title']; ?></h3>
+                        <div><?php echo $recipe['recipe']; ?></div>
+                        <i><?php echo displayAuthor($recipe['author'], $users); ?></i>
+                    </article>
+                <?php endforeach ?>
+        <?php
+            endif;
+        endif; ?>
+
     </div>
 
- 
+
     <?php include_once('includes/footer.php');    ?>
 </body>
 
