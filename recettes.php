@@ -1,9 +1,33 @@
 <!-- index.php -->
-<?php session_start(); ?>
-<!-- inclusion des variables et fonctions -->
 <?php
+session_start();
 include_once('includes/variables.php');
 include_once('includes/functions.php');
+if (!isset($_SESSION['LOGGED_USER'])) {
+    if (isset($_POST['login']) && isset($_POST['password'])) {
+        foreach ($users as $user) {
+            if ($user['email'] == $_POST['login'] && $user['password'] == $_POST['password']) {
+                if (isset($_POST['stayLoggedIn']) && $_POST['stayLoggedIn'] == 'on') {
+                    setcookie(
+                        'LOGGED_USER',
+                        $user['email'],
+                        time() + 86400,
+                        '/',
+                        '',
+                        isset($_SERVER["HTTPS"]),
+                        true
+                    );
+                    header("Location: recettes.php");
+                } else {
+                    $_SESSION['LOGGED_USER'] = $user['email'];
+                    header("Location: recettes.php");
+                }
+            } else {
+                $loginError = "Erreur de Login ou de Password";
+            }
+        }
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -22,26 +46,27 @@ include_once('includes/functions.php');
 
         <?php include_once('includes/login.php'); ?>
         <?php if (isset($_SESSION['LOGGED_USER']) || isset($_COOKIE['LOGGED_USER'])) :
-            if ($_SESSION['LOGGED_USER']) :
+            if (isset($_SESSION['LOGGED_USER'])) {
                 echo 'Bienvenue ' . $_SESSION['LOGGED_USER'] . ' ';
-            // elseif ($_COOKIE['LOGGED_USER']) :
-            //     echo 'Bienvenue ' . $_COOKIE['LOGGED_USER'] . ' ';
+            } elseif (isset($_COOKIE['LOGGED_USER']) && ($_COOKIE['LOGGED_USER'])) {
+                echo 'Bienvenue ' . $_COOKIE['LOGGED_USER'] . ' ';
+            }
+
         ?>
-                <a href="includes/logout.php">Déconnexion</a>
-                <h1>Site de recettes</h1>
+            <a href="includes/logout.php">Déconnexion</a>
+            <h1>Site de recettes</h1>
 
 
-                <?php include_once('includes/header.php'); ?>
+            <?php include_once('includes/header.php'); ?>
 
-                <?php foreach (getRecipes($recipes) as $recipe) : ?>
-                    <article>
-                        <h3><?php echo $recipe['title']; ?></h3>
-                        <div><?php echo $recipe['recipe']; ?></div>
-                        <i><?php echo displayAuthor($recipe['author'], $users); ?></i>
-                    </article>
-                <?php endforeach ?>
+            <?php foreach (getRecipes($recipes) as $recipe) : ?>
+                <article>
+                    <h3><?php echo $recipe['title']; ?></h3>
+                    <div><?php echo $recipe['recipe']; ?></div>
+                    <i><?php echo displayAuthor($recipe['author'], $users); ?></i>
+                </article>
+            <?php endforeach ?>
         <?php
-            endif;
         endif; ?>
 
     </div>
