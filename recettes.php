@@ -1,5 +1,16 @@
 <!-- index.php -->
 <?php
+
+
+try
+{
+	$db = new PDO('mysql:host=localhost:3306;dbname=test;charset=utf8', 'root', 'root');
+}
+catch (Exception $e)
+{
+        die('Erreur : ' . $e->getMessage());
+}
+
 session_start();
 include_once('includes/variables.php');
 include_once('includes/functions.php');
