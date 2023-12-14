@@ -4,13 +4,15 @@
 
 try
 {
-	$db = new PDO('mysql:host=localhost:3306;dbname=test;charset=utf8', 'root', 'root');
+	$mysqlClient = new PDO('mysql:host=localhost;dbname=we_love_food;charset=utf8', 'root', '');
 }
 catch (Exception $e)
 {
         die('Erreur : ' . $e->getMessage());
 }
-
+$recipesStatement = $mysqlClient->prepare('SELECT * FROM recipes');
+$recipesStatement->execute();
+$recipes2 =$recipesStatement->fetchAll();
 session_start();
 include_once('includes/variables.php');
 include_once('includes/functions.php');
@@ -70,7 +72,7 @@ if (!isset($_SESSION['LOGGED_USER'])) {
 
             <?php include_once('includes/header.php'); ?>
 
-            <?php foreach (getRecipes($recipes) as $recipe) : ?>
+            <?php foreach (getRecipes($recipes2) as $recipe) : ?>
                 <article>
                     <h3><?php echo $recipe['title']; ?></h3>
                     <div><?php echo $recipe['recipe']; ?></div>
