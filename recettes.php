@@ -10,9 +10,10 @@ catch (Exception $e)
 {
         die('Erreur : ' . $e->getMessage());
 }
-$recipesStatement = $mysqlClient->prepare('SELECT * FROM recipes');
+$recipesStatement = $mysqlClient->prepare('SELECT * FROM recipes WHERE is_enabled = TRUE');
 $recipesStatement->execute();
-$recipes2 =$recipesStatement->fetchAll();
+$recipe =$recipesStatement->fetchAll();
+
 session_start();
 include_once('includes/variables.php');
 include_once('includes/functions.php');
@@ -72,11 +73,11 @@ if (!isset($_SESSION['LOGGED_USER'])) {
 
             <?php include_once('includes/header.php'); ?>
 
-            <?php foreach (getRecipes($recipes2) as $recipe) : ?>
+            <?php foreach (getRecipes($recipe) as $recipe) : ?>
                 <article>
                     <h3><?php echo $recipe['title']; ?></h3>
                     <div><?php echo $recipe['recipe']; ?></div>
-                    <i><?php echo displayAuthor($recipe['author'], $users); ?></i>
+                   <i><?php echo $recipe['author']; ?></i>
                 </article>
             <?php endforeach ?>
         <?php
