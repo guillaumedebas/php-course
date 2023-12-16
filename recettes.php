@@ -1,20 +1,8 @@
 <!-- index.php -->
 <?php
-
-
-try
-{
-	$mysqlClient = new PDO('mysql:host=localhost;dbname=we_love_food;charset=utf8', 'root', '');
-}
-catch (Exception $e)
-{
-        die('Erreur : ' . $e->getMessage());
-}
-$recipesStatement = $mysqlClient->prepare('SELECT * FROM recipes WHERE is_enabled = TRUE');
-$recipesStatement->execute();
-$recipe =$recipesStatement->fetchAll();
-
 session_start();
+
+
 include_once('includes/variables.php');
 include_once('includes/functions.php');
 if (!isset($_SESSION['LOGGED_USER'])) {
@@ -41,6 +29,32 @@ if (!isset($_SESSION['LOGGED_USER'])) {
             }
         }
     }
+}
+
+try
+{
+	$mysqlClient = new PDO(
+        'mysql:host=localhost;dbname=we_love_food;charset=utf8',
+         'root', 
+         '',
+         [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+}
+catch (Exception $e)
+{
+        die('Erreur : ' . $e->getMessage());
+}
+if (isset($_COOKIE['LOGGED_USER']) || isset($_SESSION['LOGGED_USER'])) {
+$recipesStatement = $mysqlClient->prepare('SELECT * FROM recipes WHERE author = :author AND is_enabled = :is_enabled');
+if (isset($_COOKIE['LOGGED_USER'])) {
+$author = $_COOKIE['LOGGED_USER'];
+} else {
+$author = $_SESSION['LOGGED_USER'];
+}
+$recipesStatement->execute([
+    'author' => $author,
+    'is_enabled' => 0
+    ]);
+$recipes =$recipesStatement->fetchAll();
 }
 ?>
 
@@ -73,7 +87,7 @@ if (!isset($_SESSION['LOGGED_USER'])) {
 
             <?php include_once('includes/header.php'); ?>
 
-            <?php foreach (getRecipes($recipe) as $recipe) : ?>
+            <?php foreach ($recipes as $recipe) : ?>
                 <article>
                     <h3><?php echo $recipe['title']; ?></h3>
                     <div><?php echo $recipe['recipe']; ?></div>
