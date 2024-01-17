@@ -10,6 +10,9 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="recettes.php">Home</a>
         </li>
+         <li class="nav-item">
+          <a class="nav-link" href="create-recipes-form.php">Ajoutez une recette</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="contact.php">Contact</a>
         </li>
