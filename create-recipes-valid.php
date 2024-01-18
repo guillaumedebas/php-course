@@ -1,4 +1,30 @@
-<!-- contact.php -->
+<?php
+session_start();
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Vérifie si les champs nécessaires existent
+    if (isset($_POST['title']) && isset($_POST['recipe']) && isset($_POST['author']) && isset($_POST['is_enabled'])) {
+        // Les variables existent, vous pouvez les traiter ici
+        $title = $_POST['title'];
+        $recipe = $_POST['recipe'];
+        $author = $_POST['author'];
+        $isEnabled = $_POST['is_enabled'];
+
+        // Traitement des données...
+        // Par exemple, sauvegarder dans une base de données, envoyer un email, etc.
+
+        echo "Formulaire soumis avec succès.";
+    } else {
+        // Si les champs nécessaires ne sont pas présents
+        echo "Tous les champs sont requis.";
+    }
+} else {
+    // Si le formulaire n'a pas été soumis
+    echo "Accès non autorisé.";
+}
+
+
+?>
+
 <!DOCTYPE html>
 <html>
 
