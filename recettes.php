@@ -44,23 +44,6 @@ catch (Exception $e)
         die('Erreur : ' . $e->getMessage());
 }
 
-
-
-// Ecriture de la requête
-$sqlQuery = 'INSERT INTO recipes(title, recipe, author, is_enabled) VALUES (:title, :recipe, :author, :is_enabled)';
-
-// Préparation
-$insertRecipe = $mysqlClient->prepare($sqlQuery);
-
-// Exécution ! La recette est maintenant en base de données
-$insertRecipe->execute([
-    'title' => 'Cassoulet',
-    'recipe' => 'Etape 1 : Des flageolets ! Etape 2 : Euh ...',
-    'author' => 'contributeur@exemple.com',
-    'is_enabled' => 1, // 1 = true, 0 = false
-]);
-
-
 if (isset($_COOKIE['LOGGED_USER']) || isset($_SESSION['LOGGED_USER'])) {
 $recipesStatement = $mysqlClient->prepare('SELECT * FROM recipes WHERE author = :author AND is_enabled = :is_enabled');
 if (isset($_COOKIE['LOGGED_USER'])) {

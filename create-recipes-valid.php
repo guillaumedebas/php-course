@@ -1,27 +1,41 @@
 <?php
 session_start();
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Vérifie si les champs nécessaires existent
-    if (isset($_POST['title']) && isset($_POST['recipe']) && isset($_POST['author']) && isset($_POST['is_enabled'])) {
-        // Les variables existent, vous pouvez les traiter ici
+    if (
+        isset($_POST['title'])
+        && isset($_POST['recipe'])
+        && trim($_POST['title']) !== ''
+        && trim($_POST['recipe']) !== ''
+    ) {
         $title = $_POST['title'];
         $recipe = $_POST['recipe'];
-        $author = $_POST['author'];
-        $isEnabled = $_POST['is_enabled'];
-
-        // Traitement des données...
-        // Par exemple, sauvegarder dans une base de données, envoyer un email, etc.
-
-        echo "Formulaire soumis avec succès.";
     } else {
-        // Si les champs nécessaires ne sont pas présents
-        echo "Tous les champs sont requis.";
+        echo "Tous les champs sont requis et ne doivent pas être vides.";
     }
 } else {
-    // Si le formulaire n'a pas été soumis
     echo "Accès non autorisé.";
 }
 
+try
+{
+	$mysqlClient = new PDO(
+        'mysql:host=localhost;dbname=we_love_food;charset=utf8',
+         'root', 
+         '',
+         [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+}
+catch (Exception $e)
+{
+        die('Erreur : ' . $e->getMessage());
+}
+$insertRecipe = $mysqlClient->prepare('INSERT INTO recipes(title,recipe, author, is_enabled) VALUES (:title, :recipe, :author, :is_enabled)');
+$insertRecipe -> execute([
+    'title' => $title,
+    'recipe' => $recipe,
+    'is_enabled' => 1,
+    // 'author' => $loggedUser['email']
+     'author' => 'test'
+]);
 
 ?>
 

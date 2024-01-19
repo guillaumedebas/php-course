@@ -24,14 +24,7 @@
                 <label for="recipe" class="form-label">Votre recette</label>
                 <textarea class="form-control" placeholder="Votre recette ici" id="recipe" name="recipe"></textarea>
             </div>
-          <div class="mb-3">
-                <label for="author" class="form-label">Auteur</label>
-                <input type="author" class="form-control" id="author" name="author" >
-            </div>
-             <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" id="is_enabled" name="is_enabled" value="true">
-                <label class="form-check-label" for="is_enabled">Activer la recette</label>
-            </div>
+           
 
 
             <button type="submit" class="btn btn-primary">Envoyer</button>
