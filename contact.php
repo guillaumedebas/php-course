@@ -18,18 +18,7 @@ include_once 'includes/session_check.php';
 
 <body class="d-flex flex-column min-vh-100">
     <div class="container">
-        <?php if (isset($_SESSION['LOGGED_USER']) || isset($_COOKIE['LOGGED_USER'])) :
-            if (isset($_SESSION['LOGGED_USER'])) {
-                echo 'Bienvenue ' . $_SESSION['LOGGED_USER'] . ' ';
-            } elseif (isset($_COOKIE['LOGGED_USER']) && ($_COOKIE['LOGGED_USER'])) {
-                echo 'Bienvenue ' . $_COOKIE['LOGGED_USER'] . ' ';
-            }
-        ?>
-            <a href="includes/logout.php">Déconnexion</a>
-            <h1>Site de recettes</h1>
-
-        <?php
-        endif; ?>
+        <?php include_once 'includes/welcome_message.php'; ?>
         <?php include_once('includes/header.php'); ?>
         <h1>Contactez nous</h1>
         <form action="submit_contact.php" method="POST" enctype="multipart/form-data">

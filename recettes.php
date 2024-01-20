@@ -31,31 +31,25 @@ if (!isset($_SESSION['LOGGED_USER'])) {
     }
 }
 
-try
-{
-	$mysqlClient = new PDO(
+try {
+    $mysqlClient = new PDO(
         'mysql:host=localhost;dbname=we_love_food;charset=utf8',
-         'root', 
-         '',
-         [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
-}
-catch (Exception $e)
-{
-        die('Erreur : ' . $e->getMessage());
+        'root',
+        '',
+        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+    );
+} catch (Exception $e) {
+    die('Erreur : ' . $e->getMessage());
 }
 
-if (isset($_COOKIE['LOGGED_USER']) || isset($_SESSION['LOGGED_USER'])) {
-$recipesStatement = $mysqlClient->prepare('SELECT * FROM recipes WHERE author = :author AND is_enabled = :is_enabled');
-if (isset($_COOKIE['LOGGED_USER'])) {
-$author = $_COOKIE['LOGGED_USER'];
-} else {
-$author = $_SESSION['LOGGED_USER'];
-}
-$recipesStatement->execute([
-    'author' => $author,
-    'is_enabled' => 1
+if (isset($loggedUser)) {
+    $recipesStatement = $mysqlClient->prepare('SELECT * FROM recipes WHERE author = :author AND is_enabled = :is_enabled');
+    $author = $loggedUser;
+    $recipesStatement->execute([
+        'author' => $author,
+        'is_enabled' => 1
     ]);
-$recipes =$recipesStatement->fetchAll();
+    $recipes = $recipesStatement->fetchAll();
 }
 ?>
 
@@ -72,27 +66,18 @@ $recipes =$recipesStatement->fetchAll();
 
 <body class="d-flex flex-column min-vh-100">
     <div class="container">
-
+        <?php include_once 'includes/welcome_message.php'; ?>
         <?php include_once('includes/login.php'); ?>
-        <?php if (isset($_SESSION['LOGGED_USER']) || isset($_COOKIE['LOGGED_USER'])) :
-            if (isset($_SESSION['LOGGED_USER'])) {
-                echo 'Bienvenue ' . $_SESSION['LOGGED_USER'] . ' ';
-            } elseif (isset($_COOKIE['LOGGED_USER']) && ($_COOKIE['LOGGED_USER'])) {
-                echo 'Bienvenue ' . $_COOKIE['LOGGED_USER'] . ' ';
-            }
 
+        <?php if (isset($loggedUser)) :
         ?>
-            <a href="includes/logout.php">Déconnexion</a>
-            <h1>Site de recettes</h1>
-
-
             <?php include_once('includes/header.php'); ?>
 
             <?php foreach ($recipes as $recipe) : ?>
                 <article>
                     <h3><?php echo $recipe['title']; ?></h3>
                     <div><?php echo $recipe['recipe']; ?></div>
-                   <i><?php echo $recipe['author']; ?></i>
+                    <i><?php echo $recipe['author']; ?></i>
                 </article>
             <?php endforeach ?>
         <?php
