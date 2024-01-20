@@ -1,5 +1,5 @@
 <?php
-session_start();
+include_once 'includes/session_check.php';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (
         isset($_POST['title'])
@@ -16,27 +16,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     echo "Accès non autorisé.";
 }
 
-try
-{
-	$mysqlClient = new PDO(
+try {
+    $mysqlClient = new PDO(
         'mysql:host=localhost;dbname=we_love_food;charset=utf8',
-         'root', 
-         '',
-         [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
-}
-catch (Exception $e)
-{
-        die('Erreur : ' . $e->getMessage());
+        'root',
+        '',
+        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+    );
+} catch (Exception $e) {
+    die('Erreur : ' . $e->getMessage());
 }
 $insertRecipe = $mysqlClient->prepare('INSERT INTO recipes(title,recipe, author, is_enabled) VALUES (:title, :recipe, :author, :is_enabled)');
-$insertRecipe -> execute([
+$insertRecipe->execute([
     'title' => $title,
     'recipe' => $recipe,
     'is_enabled' => 1,
-    // 'author' => $loggedUser['email']
-     'author' => 'test'
+    'author' => $loggedUser
 ]);
-
 ?>
 
 <!DOCTYPE html>
@@ -52,27 +48,23 @@ $insertRecipe -> execute([
 
 <body class="d-flex flex-column min-vh-100">
     <div class="container">
+        <?php include_once 'includes/welcome_message.php'; ?>
+
 
         <?php include_once('includes/header.php'); ?>
-        <h1>Contactez nous</h1>
-        <form action="submit_contact.php" method="POST" enctype="multipart/form-data">
-            <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" aria-describedby="email-help">
-                <div id="email-help" class="form-text">Nous ne revendrons pas votre email.</div>
-            </div>
-            <div class="mb-3">
-                <label for="message" class="form-label">Votre message</label>
-                <textarea class="form-control" placeholder="Exprimez vous" id="message" name="message"></textarea>
-            </div>
-            <!-- Ajout champ d'upload ! -->
-            <div class="mb-3">
-                <label for="screenshot" class="form-label">Votre capture d'écran</label>
-                <input type="file" class="form-control" id="screenshot" name="screenshot" />
-            </div>
-            <button type="submit" class="btn btn-primary">Envoyer</button>
-        </form>
-        <br />
+        <h1>Recette validé</h1>
+        <?php
+        if (isset($title) && isset($recipe) && isset($loggedUser)) {
+            echo "<div class='alert alert-success'>";
+            echo "<h2>Confirmation</h2>";
+            echo "<p>Votre recette intitulée '<strong>" . htmlspecialchars($title) . "</strong>' a été ajoutée avec succès.</p>";
+            echo "<h3>Détails de la recette :</h3>";
+            echo "<p><strong>Titre :</strong> " . htmlspecialchars($title) . "</p>";
+            echo "<p><strong>Description :</strong> " . nl2br(htmlspecialchars($recipe)) . "</p>";
+            echo "<p><strong>Auteur :</strong> " . htmlspecialchars($loggedUser) . "</p>";
+            echo "</div>";
+        }
+        ?>
     </div>
 
     <?php include_once('includes/footer.php'); ?>

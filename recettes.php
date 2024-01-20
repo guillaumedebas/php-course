@@ -1,6 +1,6 @@
 <!-- index.php -->
 <?php
-session_start();
+include_once 'includes/session_check.php';
 
 
 include_once('includes/variables.php');
@@ -53,7 +53,7 @@ $author = $_SESSION['LOGGED_USER'];
 }
 $recipesStatement->execute([
     'author' => $author,
-    'is_enabled' => 0
+    'is_enabled' => 1
     ]);
 $recipes =$recipesStatement->fetchAll();
 }
