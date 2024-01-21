@@ -30,17 +30,8 @@ if (!isset($_SESSION['LOGGED_USER'])) {
         }
     }
 }
-
-try {
-    $mysqlClient = new PDO(
-        'mysql:host=localhost;dbname=we_love_food;charset=utf8',
-        'root',
-        '',
-        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-    );
-} catch (Exception $e) {
-    die('Erreur : ' . $e->getMessage());
-}
+ 
+require_once 'includes/db_connect.php';
 
 if (isset($loggedUser)) {
     $recipesStatement = $mysqlClient->prepare('SELECT * FROM recipes WHERE author = :author AND is_enabled = :is_enabled');
@@ -78,6 +69,8 @@ if (isset($loggedUser)) {
                     <h3><?php echo $recipe['title']; ?></h3>
                     <div><?php echo $recipe['recipe']; ?></div>
                     <i><?php echo $recipe['author']; ?></i>
+                    <a class="link-warning" href="update-recipe.php?id=<?php echo($recipe['recipe_id']); ?>">Editer la recette</a>
+                    
                 </article>
             <?php endforeach ?>
         <?php
