@@ -23,7 +23,7 @@ $recipe = $retrieveRecipeStatement->fetch(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Site de recettes - Formulaire de Création de recette</title>
+    <title>Site de recettes - Formulaire de Suppression de recette</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
  
@@ -31,24 +31,18 @@ $recipe = $retrieveRecipeStatement->fetch(PDO::FETCH_ASSOC);
     <div class="container">
         <?php include_once 'includes/welcome_message.php'; ?>
         <?php include_once('includes/header.php'); ?>
-        <h2>Modification de la recette</h2>
-        <form action="recipes_post_update.php" method="POST" >
+        <h2>Suppression de la recette</h2>
+        <form action="recipes_post_delete.php" method="POST" >
         <div class="mb-3 visually-hidden">
         <label for="id" class="form-control" id="id" name="id" >Identifiant de la recette</label>
         <input type="hidden" class="form-control" id="id" name="id" value="<?php echo($getData['id']); ?>"> 
         </div>
-            <div class="mb-3">
-                <label for="title" class="form-label">Titre</label>
-                <input type="title" class="form-control" id="title" name="title" value="<?php echo($recipe['title']); ?>">
-            </div>
-            <div class="mb-3">
-                <label for="recipe" class="form-label">Votre recette</label>
-                <textarea class="form-control"  id="recipe" name="recipe" ><?php echo($recipe['recipe']); ?></textarea>
-            </div>
+        <p>Voulez-vous supprimer la recette <strong><?php echo($recipe['title']); ?></strong> ?</p>
+
+      
 
 
-
-            <button type="submit" class="btn btn-primary">Envoyer</button>
+            <button type="submit" class="btn btn-danger">La suppression est définitive</button>
         </form>
         <br />
     </div>

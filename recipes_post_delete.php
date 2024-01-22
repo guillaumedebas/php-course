@@ -3,26 +3,19 @@ include_once 'includes/session_check.php';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (
         isset($_POST['id'])
-        &&isset($_POST['title'])
-        && isset($_POST['recipe'])
-        && trim($_POST['title']) !== ''
-        && trim($_POST['recipe']) !== ''
+       
     ) {
-        $title = $_POST['title'];
-        $recipe = $_POST['recipe'];
-        $id = $_POST['id'];
+       $id = $_POST['id'];
     } else {
-        echo "Tous les champs sont requis et ne doivent pas être vides.";
+        echo "Tous les champs sont requis";
     }
 } else {
     echo "Accès non autorisé.";
 }
 
 require_once 'includes/db_connect.php';
-$insertRecipeStatement = $mysqlClient->prepare('UPDATE recipes SET title = :title, recipe = :recipe WHERE recipe_id= :id');
+$insertRecipeStatement = $mysqlClient->prepare('DELETE FROM recipes WHERE  recipe_id= :id');
 $insertRecipeStatement->execute([
-    'title' => $title,
-    'recipe' => $recipe,
     'id' => $id
 ]);
 ?>
@@ -46,14 +39,10 @@ $insertRecipeStatement->execute([
         <?php include_once('includes/header.php'); ?>
         <h2>Recette Mise à jour</h2>
         <?php
-        if (isset($title) && isset($recipe) && isset($loggedUser)) {
+        if (isset($id) && isset($loggedUser)) {
             echo "<div class='alert alert-success'>";
             echo "<h2>Confirmation</h2>";
-            echo "<p>Votre recette intitulée '<strong>" . htmlspecialchars($title) . "</strong>' a été mise à jour avec succès.</p>";
-            echo "<h3>Détails de la recette :</h3>";
-            echo "<p><strong>Titre :</strong> " . htmlspecialchars($title) . "</p>";
-            echo "<p><strong>Description :</strong> " . nl2br(htmlspecialchars($recipe)) . "</p>";
-            echo "<p><strong>Auteur :</strong> " . htmlspecialchars($loggedUser) . "</p>";
+            echo "<p>Votre recette  a été supprimée avec succès.</p>";
             echo "</div>";
         }
         ?>
