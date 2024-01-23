@@ -66,13 +66,7 @@ if (isset($loggedUser)) {
 
             <?php foreach ($recipes as $recipe) : ?>
                 <article>
-                    <h3><?php echo $recipe['title']; ?></h3>
-                    <div><?php echo $recipe['recipe']; ?></div>
-                    <i><?php echo $recipe['author']; ?></i>
-                    <ul class="list-group list-group-horizontal">
-                    <li class="list-group-item"><a class="link-warning" href="update-recipe.php?id=<?php echo($recipe['recipe_id']); ?>">Editer la recette</a></li>
-                    <li class="list-group-item"><a class="link-danger" href="delete-recipe.php?id=<?php echo($recipe['recipe_id']); ?>">Supprimer la recette</a></li>
-                    </ul>
+                    <h3><a href="recipe-info.php?id=<?php echo($recipe['recipe_id']); ?>"><?php echo $recipe['title']; ?></a></h3>
                 </article>
             <?php endforeach ?>
         <?php
