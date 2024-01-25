@@ -28,7 +28,7 @@ print_r($comments);
 
 <!-- create-recipes-form.php -->
 <!DOCTYPE html>
-<html> 
+<html>
 
 <head>
     <meta charset="UTF-8">
@@ -51,9 +51,13 @@ print_r($comments);
                 <h3><?php echo $recipe['title']; ?></h3>
                 <div><?php echo $recipe['recipe']; ?></div>
                 <i><?php echo $recipe['author']; ?></i>
-                <?php foreach ($comments as $comment) : ?>
-                    <div><?php echo htmlspecialchars($comment['full_name']); ?>: <?php echo htmlspecialchars($comment['comment']); ?></div>
-                <?php endforeach; ?>
+                <?php if (count($comments) > 0) : ?>
+                    <?php foreach ($comments as $comment) : ?>
+                        <div><?php echo htmlspecialchars($comment['full_name']); ?>: <?php echo htmlspecialchars($comment['comment']); ?></div>
+                    <?php endforeach; ?>
+                <?php else : ?>
+                    <div>Aucun commentaire.</div>
+                <?php endif; ?>
 
                 <ul class="list-group list-group-horizontal">
                     <li class="list-group-item"><a class="link-warning" href="update-recipe.php?id=<?php echo ($recipe['recipe_id']); ?>">Editer la recette</a></li>
